@@ -1,7 +1,7 @@
 {
   "name": "gulp",
   "description": "The streaming build system",
-  "version": "3.9.0",
+  "version": "3.9.1",
   "homepage": "http://gulpjs.com",
   "repository": "gulpjs/gulp",
   "author": "Fractal <contact@wearefractal.com> (http://wearefractal.com/)",
@@ -18,7 +18,8 @@
     "index.js",
     "lib",
     "bin",
-    "completion"
+    "completion",
+    "gulp.1"
   ],
   "bin": {
     "gulp": "./bin/gulp.js"
@@ -29,7 +30,7 @@
     "chalk": "^1.0.0",
     "deprecated": "^0.0.1",
     "gulp-util": "^3.0.0",
-    "interpret": "^0.6.2",
+    "interpret": "^1.0.0",
     "liftoff": "^2.1.0",
     "minimist": "^1.1.0",
     "orchestrator": "^0.3.0",
@@ -41,11 +42,12 @@
   },
   "devDependencies": {
     "coveralls": "^2.7.0",
+    "eslint": "^1.7.3",
+    "eslint-config-gulp": "^2.0.0",
     "graceful-fs": "^3.0.0",
     "istanbul": "^0.3.0",
-    "jscs": "~1.12.0",
-    "jshint": "^2.5.0",
-    "jshint-stylish": "^1.0.0",
+    "jscs": "^2.3.5",
+    "jscs-preset-gulp": "^1.0.0",
     "marked-man": "^0.1.3",
     "mkdirp": "^0.5.0",
     "mocha": "^2.0.1",
@@ -56,8 +58,9 @@
   },
   "scripts": {
     "prepublish": "marked-man --name gulp docs/CLI.md > gulp.1",
-    "lint": "jshint lib bin test index.js --reporter node_modules/jshint-stylish/stylish.js --exclude node_modules && jscs lib bin test index.js",
-    "test": "npm run-script lint && mocha --reporter spec",
+    "lint": "eslint . && jscs *.js bin/ lib/ test/",
+    "pretest": "npm run lint",
+    "test": "mocha --reporter spec",
     "coveralls": "istanbul cover _mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
   "engines": {

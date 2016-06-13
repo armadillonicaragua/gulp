@@ -6,6 +6,7 @@
 * [Writing a Plugin](writing-a-plugin/README.md) - So you're writing a gulp plugin? Go here for the essential dos and don'ts.
 * [Spanish documentation][SpanishDocs] - gulp en Español.
 * [Simplified Chinese documentation][SimplifiedChineseDocs] - gulp 简体中文文档.
+* [Korean documentation][KoreanDocs] - gulp 한국어 참조 문서.
 
 
 ## FAQ
@@ -39,6 +40,7 @@ Post on [StackOverflow with a #gulp tag](http://stackoverflow.com/questions/tagg
 * [Gulp - The Basics (screencast)](https://www.youtube.com/watch?v=dwSLFai8ovQ)
 * [Get started with gulp (video series)](http://www.youtube.com/playlist?list=PLRk95HPmOM6PN-G1xyKj9q6ap_dc9Yckm)
 * [Optimize your web code with gulp](http://www.linuxuser.co.uk/tutorials/optimise-your-web-code-with-gulp-js)
+* [Automate Your Tasks Easily with Gulp.js ](https://scotch.io/tutorials/automate-your-tasks-easily-with-gulp-js)
 
 
 ## Examples
@@ -56,3 +58,4 @@ To the extent possible under law, [Fractal](http://wearefractal.com) has waived 
 
 [SpanishDocs]: https://github.com/bucaran/gulp-docs-es
 [SimplifiedChineseDocs]: https://github.com/lisposter/gulp-docs-zh-cn
+[KoreanDocs]: https://github.com/preco21/gulp-docs-ko

@@ -3,14 +3,14 @@
 Jump to:
   [gulp.src](#gulpsrcglobs-options) |
   [gulp.dest](#gulpdestpath-options) |
-  [gulp.task](#gulptaskname-deps-fn) |
+  [gulp.task](#gulptaskname--deps--fn) |
   [gulp.watch](#gulpwatchglob--opts-tasks-or-gulpwatchglob--opts-cb)
 
 ### gulp.src(globs[, options])
 
-Emits files matching provided glob or an array of globs. 
-Returns a [stream](http://nodejs.org/api/stream.html) of [Vinyl files](https://github.com/wearefractal/vinyl-fs) 
-that can be [piped](http://nodejs.org/api/stream.html#stream_readable_pipe_destination_options) 
+Emits files matching provided glob or an array of globs.
+Returns a [stream](http://nodejs.org/api/stream.html) of [Vinyl files](https://github.com/gulpjs/vinyl-fs)
+that can be [piped](http://nodejs.org/api/stream.html#stream_readable_pipe_destination_options)
 to plugins.
 
 ```javascript
@@ -20,33 +20,43 @@ gulp.src('client/templates/*.jade')
   .pipe(gulp.dest('build/minified_templates'));
 ```
 
-`glob` refers to [node-glob syntax](https://github.com/isaacs/node-glob) or it can be a direct file path.
-
 #### globs
 Type: `String` or `Array`
 
-Glob or array of globs to read.
+Glob or array of globs to read. Globs use [node-glob syntax] except that negation is fully supported.
+
+A glob that begins with `!` excludes matching files from the glob results up to that point. For example, consider this directory structure:
+
+    client/
+      a.js
+      bob.js
+      bad.js
+
+The following expression matches `a.js` and `bad.js`:
+
+    gulp.src(['client/*.js', '!client/b*.js', 'client/bad.js'])
+
 
 #### options
 Type: `Object`
 
 Options to pass to [node-glob] through [glob-stream].
 
-gulp adds some additional options in addition to the [options supported by node-glob][node-glob documentation] and [glob-stream]:
+gulp supports all [options supported by node-glob][node-glob documentation] and [glob-stream] except `ignore` and adds the following options.
 
-#### options.buffer
+##### options.buffer
 Type: `Boolean`
 Default: `true`
 
 Setting this to `false` will return `file.contents` as a stream and not buffer files. This is useful when working with large files. **Note:** Plugins might not implement support for streams.
 
-#### options.read
+##### options.read
 Type: `Boolean`
 Default: `true`
 
 Setting this to `false` will return `file.contents` as null and not read the file at all.
 
-#### options.base
+##### options.base
 Type: `String`
 Default: everything before a glob starts (see [glob2base])
 
@@ -75,30 +85,30 @@ gulp.src('./client/templates/*.jade')
 ```
 
 The write path is calculated by appending the file relative path to the given
-destination directory. In turn, relative paths are calculated against the file base. 
+destination directory. In turn, relative paths are calculated against the file base.
 See `gulp.src` above for more info.
 
 #### path
 Type: `String` or `Function`
 
-The path (output folder) to write files to. Or a function that returns it, the function will be provided a [vinyl File instance](https://github.com/wearefractal/vinyl).
+The path (output folder) to write files to. Or a function that returns it, the function will be provided a [vinyl File instance](https://github.com/gulpjs/vinyl).
 
 #### options
 Type: `Object`
 
-#### options.cwd
+##### options.cwd
 Type: `String`
 Default: `process.cwd()`
 
 `cwd` for the output folder, only has an effect if provided output folder is relative.
 
-#### options.mode
+##### options.mode
 Type: `String`
 Default: `0777`
 
 Octal permission string specifying mode for any folders that need to be created for output folder.
 
-### gulp.task(name[, deps], fn)
+### gulp.task(name [, deps] [, fn])
 
 Define a task using [Orchestrator].
 
@@ -109,6 +119,7 @@ gulp.task('somename', function() {
 ```
 
 #### name
+Type: `String`
 
 The name of the task. Tasks that you want to run from the command line should not have spaces in them.
 
@@ -125,9 +136,30 @@ gulp.task('mytask', ['array', 'of', 'task', 'names'], function() {
 
 **Note:** Are your tasks running before the dependencies are complete?  Make sure your dependency tasks are correctly using the async run hints: take in a callback or return a promise or event stream.
 
-#### fn
+You can also omit the function if you only want to run a bundle of dependency tasks:
 
-The function that performs the task's operations. Generally this takes the form of `gulp.src().pipe(someplugin())`.
+```js
+gulp.task('build', ['array', 'of', 'task', 'names']);
+```
+
+**Note:** The tasks will run in parallel (all at once), so don't assume that the tasks will start/finish in order.
+
+#### fn
+Type: `Function`
+
+The function performs the task's main operations. Generally this takes the form of:
+
+```js
+gulp.task('buildStuff', function() {
+  // Do something that "builds stuff"
+  var stream = gulp.src(/*some source path*/)
+  .pipe(somePlugin())
+  .pipe(someOtherPlugin())
+  .pipe(gulp.dest(/*some destination*/));
+
+  return stream;
+  });
+```
 
 #### Async task support
 
@@ -143,6 +175,17 @@ gulp.task('jekyll', function(cb) {
   exec('jekyll build', function(err) {
     if (err) return cb(err); // return error
     cb(); // finished task
+  });
+});
+
+// use an async result in a pipe
+gulp.task('somename', function(cb) {
+  getFilesAsync(function(err, res) {
+    if (err) return cb(err);
+    var stream = gulp.src(res)
+      .pipe(minify())
+      .pipe(gulp.dest('build'))
+      .on('end', cb);
   });
 });
 ```
@@ -263,7 +306,7 @@ The callback will be passed an object, `event`, that describes the change:
 ##### event.type
 Type: `String`
 
-The type of change that occurred, either `added`, `changed` or `deleted`.
+The type of change that occurred, either `added`, `changed`, `deleted` or `renamed`.
 
 ##### event.path
 Type: `String`
@@ -271,9 +314,10 @@ Type: `String`
 The path to the file that triggered the event.
 
 
-[node-glob documentation]: https://github.com/isaacs/node-glob#options
 [node-glob]: https://github.com/isaacs/node-glob
-[glob-stream]: https://github.com/wearefractal/glob-stream
+[node-glob documentation]: https://github.com/isaacs/node-glob#options
+[node-glob syntax]: https://github.com/isaacs/node-glob
+[glob-stream]: https://github.com/gulpjs/glob-stream
 [gulp-if]: https://github.com/robrich/gulp-if
 [Orchestrator]: https://github.com/robrich/orchestrator
 [glob2base]: https://github.com/wearefractal/glob2base

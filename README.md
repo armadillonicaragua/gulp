@@ -2,21 +2,24 @@
   <a href="http://gulpjs.com">
     <img height="257" width="114" src="https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png">
   </a>
+  <p align="center">The streaming build system</p>
 </p>
 
-# gulp
-**The streaming build system**
-
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Support us][gittip-image]][gittip-url] [![Build Status][travis-image]][travis-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Gitter chat][gitter-image]][gitter-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Gitter chat][gitter-image]][gitter-url]
 
 ## What is gulp?
 
-gulp is a toolkit that will help you automate painful or time-consuming tasks in your development workflow. For web development (if that's your thing) it can help you by doing CSS preprocessing, JS transpiling, minification, live reloading, and much more.
-Integrations are built into all major IDEs and people are loving gulp across PHP, .NET, Node.js, Java, and more. With over 1700 plugins (and plenty you can do without plugins), gulp lets you quit messing with build systems and get back to work.
+- **Automation** - gulp is a toolkit that helps you automate painful or time-consuming tasks in your development workflow.
+- **Platform-agnostic** - Integrations are built into all major IDEs and people are using gulp with PHP, .NET, Node.js, Java, and other platforms.
+- **Strong Ecosystem** - Use npm modules to do anything you want + over 2000 curated plugins for streaming file transformations
+- **Simple** - By providing only a minimal API surface, gulp is easy to learn and simple to use
 
 ## Documentation
 
-For a Getting started guide, API docs, recipes, making a plugin, etc. see the [documentation page](/docs/README.md)!
+For a Getting started guide, API docs, recipes, making a plugin, etc. check out our docs!
+
+- Need something reliable? Check out the [documentation for the current release](/docs/README.md)!
+- Want to help us test the latest and greatest? Check out the [documentation for the next release](https://github.com/gulpjs/gulp/tree/4.0)!
 
 ## Sample `gulpfile.js`
 
@@ -78,33 +81,23 @@ gulp.task('default', ['watch', 'scripts', 'images']);
 We recommend these plugins:
 
 - [gulp-changed](https://github.com/sindresorhus/gulp-changed) - only pass through changed files
-- [gulp-cached](https://github.com/wearefractal/gulp-cached) - in-memory file cache, not for operation on sets of files
+- [gulp-cached](https://github.com/contra/gulp-cached) - in-memory file cache, not for operation on sets of files
 - [gulp-remember](https://github.com/ahaurw01/gulp-remember) - pairs nicely with gulp-cached
 - [gulp-newer](https://github.com/tschaub/gulp-newer) - pass through newer source files only, supports many:1 source:dest
 
 ## Want to contribute?
 
-Anyone can help make this project better - check out the [Contributing guide](/CONTRIBUTING.md)!
+Anyone can help make this project better - check out our [Contributing guide](/CONTRIBUTING.md)!
 
-## Like what we do?
-
-[Support us via Gratipay](https://gratipay.com/WeAreFractal/)
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/wearefractal/gulp/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
-[gittip-url]: https://www.gittip.com/WeAreFractal/
-[gittip-image]: http://img.shields.io/gittip/WeAreFractal.svg
-
-[downloads-image]: http://img.shields.io/npm/dm/gulp.svg
-[npm-url]: https://npmjs.org/package/gulp
-[npm-image]: http://img.shields.io/npm/v/gulp.svg
+[downloads-image]: https://img.shields.io/npm/dm/gulp.svg
+[npm-url]: https://www.npmjs.com/package/gulp
+[npm-image]: https://img.shields.io/npm/v/gulp.svg
 
 [travis-url]: https://travis-ci.org/gulpjs/gulp
-[travis-image]: http://img.shields.io/travis/gulpjs/gulp.svg
+[travis-image]: https://img.shields.io/travis/gulpjs/gulp/master.svg
 
 [coveralls-url]: https://coveralls.io/r/gulpjs/gulp
-[coveralls-image]: http://img.shields.io/coveralls/gulpjs/gulp/master.svg
+[coveralls-image]: https://img.shields.io/coveralls/gulpjs/gulp/master.svg
 
 [gitter-url]: https://gitter.im/gulpjs/gulp
-[gitter-image]: https://badges.gitter.im/gulpjs/gulp.png
+[gitter-image]: https://badges.gitter.im/gulpjs/gulp.svg

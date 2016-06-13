@@ -7,7 +7,7 @@ Below you have a simple recipe that bumps the project version, commits the chang
 
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
-var conventionalChangelog = require('conventional-changelog');
+var conventionalChangelog = require('gulp-conventional-changelog');
 var conventionalGithubReleaser = require('conventional-github-releaser');
 var bump = require('gulp-bump');
 var gutil = require('gulp-util');
@@ -44,6 +44,7 @@ gulp.task('bump-version', function () {
 
 gulp.task('commit-changes', function () {
   return gulp.src('.')
+    .pipe(git.add())
     .pipe(git.commit('[Prerelease] Bumped version number'));
 });
 
